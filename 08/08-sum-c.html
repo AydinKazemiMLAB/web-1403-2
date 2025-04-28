@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>08B</title>
+    <style>
+        #result {
+            display: block;
+            background-color: cadetblue;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<input id="a" type="text">
+<input id="b" type="text">
+<input id="sum-button" , type="button" , value="Calculate">
+<br><br>
+<div id="result"></div>
+
+<script>
+    async function getData() {
+        let input1 = document.getElementById("a").value;
+        let input2 = document.getElementById("b").value;
+
+        const url = "http://127.0.0.1/sum/" + input1 + "/" + input2;
+        try {
+            const response = await fetch(url)
+            if (!response.ok) {
+                console.log("ERROR");
+            } else {
+                json = await response.json();
+
+                let resultSpan = document.createElement("span");
+                resultSpan.innerHTML = "<span>" + json.toString() + "</span>";
+                let test = document.getElementById("result").firstChild;
+                test.remove();
+                document.getElementById("result").appendChild(resultSpan);
+
+                console.log(json)
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+    document.getElementById("sum-button").addEventListener("click", function () {
+        getData();
+    });
+</script>
+</body>
+</html>
